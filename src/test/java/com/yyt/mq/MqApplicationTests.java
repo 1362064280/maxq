@@ -11,6 +11,7 @@ public class MqApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }

@@ -1,19 +1,20 @@
 package com.yyt.mq.consumer.impl;
 
-import com.yyt.mq.config.AmqpConfig;
+import com.yyt.mq.constant.MQConstant;
 import com.yyt.mq.consumer.AMQPConsumer;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-@Component("queueConsumer")
-@RabbitListener(queues = AmqpConfig.queueName)
-public class QueueConsumerImpl implements AMQPConsumer {
+import java.time.LocalDateTime;
 
-    @Override
+@Component
+@RabbitListener(queues = MQConstant.STOCK_REPEAT_TRADE_QUEUE_NAME)
+public class DelayComsumerImpl implements AMQPConsumer{
+
     @RabbitHandler
+    @Override
     public void receive(String content) {
-        System.out.println( Thread.currentThread().getName() + "接收消息<<<<<<<<  : " + content);
+        System.out.println(LocalDateTime.now() + "延迟消息接收<<<<<<<<<" + content);
     }
-
 }
