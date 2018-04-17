@@ -48,11 +48,11 @@ public class MapperHelper {
         return json;
     }
 
-    public <T> T readValue(String content, Class<T> valueType) {
+    public <T> T readValue(String content, Class<T> valueType) throws IOException{
         try {
             return mapper.readValue(content, valueType);
         } catch (IOException e) {
-            return null;
+            throw e;
         }
     }
 

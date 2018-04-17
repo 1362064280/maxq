@@ -1,7 +1,11 @@
 package com.yyt.mq.config;
 
 import com.yyt.mq.constant.MQConstant;
+import com.yyt.mq.listener.OrderMessageListener;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,26 +15,37 @@ import java.util.Map;
 @Configuration
 public class AmqpConfig {
 
-
-    public final static String queueName = "queue-order";
-
-    public final static String exchangeName = "exchange-order";
-
-    public final static String routingKeyName = "key-order";
-
     @Bean
-    public Queue queueMessage() {
-        return new Queue(AmqpConfig.queueName);
+    public Queue orderQueue() {
+        return new Queue(MQConstant.ORDER_QUEUE);
     }
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(AmqpConfig.exchangeName);
+    TopicExchange orderExchange() {
+        return new TopicExchange(MQConstant.ORDER_EXCHANGE);
     }
 
     @Bean
-    Binding bindingExchangeMessage(Queue queueMessage, TopicExchange exchange) {
-        return BindingBuilder.bind(queueMessage).to(exchange).with(AmqpConfig.routingKeyName);
+    Binding orderBind(Queue orderQueue, TopicExchange orderExchange) {
+        return BindingBuilder.bind(orderQueue).to(orderExchange).with(MQConstant.ORDER_ROUTING_KEY);
+    }
+
+    @Autowired
+    private OrderMessageListener orderMessageListener;
+
+    @Bean
+    SimpleMessageListenerContainer getQueueMessageListenerContainer(ConnectionFactory connectionFactory, Queue orderQueue) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
+        container.setQueues(orderQueue);
+        container.setExposeListenerChannel(true);
+        container.setMaxConcurrentConsumers(1);
+        container.setConcurrentConsumers(1);
+        /**
+         * 设置确认模式手工确认
+         */
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setMessageListener(orderMessageListener);
+        return container;
     }
 
     @Bean
