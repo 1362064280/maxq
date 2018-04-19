@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 
 @Component
 @RabbitListener(queues = MQConstant.STOCK_REPEAT_TRADE_QUEUE_NAME)
-public class DelayComsumerImpl implements AMQPConsumer{
+public class DeadLetterComsumerImpl implements AMQPConsumer{
 
-    private static Logger logger = LoggerFactory.getLogger(DelayComsumerImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(DeadLetterComsumerImpl.class);
 
     @RabbitHandler
     @Override

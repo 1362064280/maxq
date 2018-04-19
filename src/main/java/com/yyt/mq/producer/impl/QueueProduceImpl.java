@@ -1,7 +1,7 @@
 package com.yyt.mq.producer.impl;
 
 import com.yyt.mq.constant.MQConstant;
-import com.yyt.mq.producer.AMQPProduce;
+import com.yyt.mq.producer.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("queueProduce")
-public class QueueProduceImpl implements AMQPProduce {
+public class QueueProduceImpl implements Producer {
 
     private static Logger logger = LoggerFactory.getLogger(QueueProduceImpl.class);
 

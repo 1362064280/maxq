@@ -18,8 +18,14 @@ public class MQConstant {
     /**
      * 订单的队列
      */
-    public final static String ORDER_EXCHANGE = "exchange-order";
-    public final static String ORDER_ROUTING_KEY = "key-order";
-    public final static String ORDER_QUEUE = "queue-order";
+    public static final String ORDER_EXCHANGE = "exchange-order";
+    public static final String ORDER_ROUTING_KEY = "key-order";
+    public static final String ORDER_QUEUE = "queue-order";
+
+
+    /**
+     * 重试队列
+     */
+    public static final String RETRY_COUNT = "retry_count";
 
 }

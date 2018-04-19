@@ -38,7 +38,7 @@ public class MapperHelper {
         mapper.registerModule(module);
     }
 
-    public String writeValueAsString(Object obj) {
+    public static String writeValueAsString(Object obj) {
         String json = null;
         try {
             json = mapper.writeValueAsString(obj);
@@ -48,7 +48,7 @@ public class MapperHelper {
         return json;
     }
 
-    public <T> T readValue(String content, Class<T> valueType) throws IOException{
+    public static  <T> T readValue(String content, Class<T> valueType) throws IOException{
         try {
             return mapper.readValue(content, valueType);
         } catch (IOException e) {
