@@ -45,7 +45,6 @@ public class Runner implements CommandLineRunner {
 //            queueProduce.sendDelay(MQConstant.STOCK_EXCHANGE, MQConstant.STOCK_REPEAT_TRADE_QUEUE_NAME, stock.toString(), 60000);
 //        }
 
-
         RabbitProducer rabbitProducer = new RabbitProducer(RabbitProcessor.getRabbitConfig1());
 
         for(int i=0; i<10; i++) {
